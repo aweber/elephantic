@@ -10,4 +10,4 @@ from importlib import metadata
 try:
     version = metadata.version('elephantic')
 except metadata.PackageNotFoundError:
-    version = '0.0.0-dev'
+    version = '0.0.0'

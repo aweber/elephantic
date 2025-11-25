@@ -9,7 +9,7 @@
 # as is required for <<-EOF heredocs to work.  Please keep
 # it this way!
 set -e
-if test -n "$CI_DEBUG_TRACE" -o -n "$SHELLDEBUG"
+if test -n "$SHELLDEBUG"
 then
 	set -x
 fi

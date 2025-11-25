@@ -4,5 +4,4 @@
 /public
 VERSION
 !/.gitignore
-!/.gitlab-ci.yml
 !/.pre-commit-config.yaml

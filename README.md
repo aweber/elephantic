@@ -24,13 +24,7 @@ This project uses [Hatch](https://hatch.pypa.io/) for project management.
 ### Setup
 
 ```bash
-# Create a virtual environment and install dependencies
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-pip install -e ".[dev]"
-
-# Install pre-commit hooks
-pre-commit install
+./bootstrap
 ```
 
 ### Running Tests
