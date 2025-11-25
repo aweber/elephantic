@@ -47,26 +47,24 @@ class TestCast(unittest.TestCase):
         self.assertIsNone(c.function)
 
     def test_cast_with_assignment(self):
-        """Test creating a cast with assignment context."""
-        c = cast.Cast(
-            source_type='integer',
-            target_type='text',
-            assignment=True,
-        )
-        self.assertEqual(c.source_type, 'integer')
-        self.assertEqual(c.target_type, 'text')
-        self.assertTrue(c.assignment)
+        """Test that assignment requires a conversion mechanism."""
+        with self.assertRaises(pydantic.ValidationError) as ctx:
+            cast.Cast(
+                source_type='integer',
+                target_type='text',
+                assignment=True,
+            )
+        self.assertIn('Must specify either sql OR one of', str(ctx.exception))
 
     def test_cast_with_implicit(self):
-        """Test creating a cast with implicit context."""
-        c = cast.Cast(
-            source_type='integer',
-            target_type='text',
-            implicit=True,
-        )
-        self.assertEqual(c.source_type, 'integer')
-        self.assertEqual(c.target_type, 'text')
-        self.assertTrue(c.implicit)
+        """Test that implicit requires a conversion mechanism."""
+        with self.assertRaises(pydantic.ValidationError) as ctx:
+            cast.Cast(
+                source_type='integer',
+                target_type='text',
+                implicit=True,
+            )
+        self.assertIn('Must specify either sql OR one of', str(ctx.exception))
 
     def test_cast_requires_source_type(self):
         """Test that source_type is required."""
@@ -198,15 +196,15 @@ class TestCast(unittest.TestCase):
         self.assertTrue(c.assignment)
 
     def test_cast_with_assignment_and_implicit(self):
-        """Test cast with assignment and implicit."""
-        c = cast.Cast(
-            source_type='integer',
-            target_type='text',
-            assignment=True,
-            implicit=True,
-        )
-        self.assertTrue(c.assignment)
-        self.assertTrue(c.implicit)
+        """Test that assignment and implicit together require a conversion mechanism."""
+        with self.assertRaises(pydantic.ValidationError) as ctx:
+            cast.Cast(
+                source_type='integer',
+                target_type='text',
+                assignment=True,
+                implicit=True,
+            )
+        self.assertIn('Must specify either sql OR one of', str(ctx.exception))
 
     def test_cast_defaults(self):
         """Test cast default values."""

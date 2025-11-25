@@ -151,11 +151,11 @@ class Index(pydantic.BaseModel):
 
         if v is None:
             return v
-        pattern = re.compile(r'^[A-Za-z0-9_]*$')
+        pattern = re.compile(r'^[A-Za-z0-9_]+$')
         for key in v.keys():
             if not pattern.match(key):
                 raise ValueError(
-                    f'Storage parameter name "{key}" does not match required pattern: ^[A-Za-z0-9_]*$'
+                    f'Storage parameter name "{key}" does not match required pattern: ^[A-Za-z0-9_]+$'
                 )
         return v
 

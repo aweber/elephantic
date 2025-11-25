@@ -88,7 +88,7 @@ class Cast(pydantic.BaseModel):
     }
 
     @pydantic.model_serializer(mode='wrap')
-    def _serialize_model(self, serializer, info):
+    def _serialize_model(self, serializer, _info):
         """Serialize model using aliases by default."""
         data = serializer(self)
         # Use aliases for all serialization
@@ -100,8 +100,8 @@ class Cast(pydantic.BaseModel):
     def validate_cast_definition(self) -> Cast:
         """Validate that cast is defined correctly.
 
-        Either sql OR one of (function, inout, assignment, implicit) must be
-        provided, with specific combinations allowed.
+        Either sql OR at least one of (function, inout) must be provided.
+        assignment and implicit can only be present with a conversion mechanism.
         """
         has_sql = self.sql is not None
         has_function = self.function is not None
@@ -118,19 +118,21 @@ class Cast(pydantic.BaseModel):
                 )
             return self
 
-        # If not using SQL, must have function OR inout OR assignment OR implicit
-        if not (has_function or has_inout or has_assignment or has_implicit):
+        # If not using SQL, must have function OR inout as conversion mechanism
+        has_conversion = has_function or has_inout
+        if not has_conversion:
             raise ValueError(
-                'Must specify either sql OR one of: function, inout, '
-                'assignment, implicit'
+                'Must specify either sql OR one of: function, inout'
             )
 
         # If using function, cannot use inout
         if has_function and has_inout:
             raise ValueError('Cannot specify both function and inout')
 
-        # If using inout, cannot use function
-        if has_inout and has_function:
-            raise ValueError('Cannot specify both inout and function')
+        # assignment and implicit can only be used with a conversion mechanism
+        if (has_assignment or has_implicit) and not has_conversion:
+            raise ValueError(
+                'assignment and implicit can only be used with function or inout'
+            )
 
         return self

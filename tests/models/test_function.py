@@ -15,7 +15,7 @@ class TestParameterMode(unittest.TestCase):
         self.assertEqual(function.ParameterMode.IN.value, 'IN')
         self.assertEqual(function.ParameterMode.OUT.value, 'OUT')
         self.assertEqual(function.ParameterMode.BOTH.value, 'BOTH')
-        self.assertEqual(function.ParameterMode.VARADIC.value, 'VARADIC')
+        self.assertEqual(function.ParameterMode.VARIADIC.value, 'VARIADIC')
         self.assertEqual(function.ParameterMode.TABLE.value, 'TABLE')
 
 

@@ -14,7 +14,7 @@ class ParameterMode(enum.StrEnum):
     IN = 'IN'
     OUT = 'OUT'
     BOTH = 'BOTH'
-    VARADIC = 'VARADIC'
+    VARIADIC = 'VARIADIC'
     TABLE = 'TABLE'
 
 
@@ -78,7 +78,7 @@ class Function(pydantic.BaseModel):
     )
     parameters: list[Parameter] | None = pydantic.Field(
         default=None,
-        description='An array of IN, OUT, BOTH, VARADIC, and TABLE args',
+        description='An array of IN, OUT, BOTH, VARIADIC, and TABLE args',
     )
     returns: str | None = pydantic.Field(
         default=None,

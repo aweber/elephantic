@@ -155,9 +155,9 @@ class Type(pydantic.BaseModel):
         default=None,
         description='Used to help control which implicit cast will be applied in ambiguous situations',
     )
-    preferred: str | None = pydantic.Field(
+    preferred: bool | None = pydantic.Field(
         default=None,
-        description='Used to help control which implicit cast will be applied in ambiguous situations',
+        description='Marks this type as preferred for implicit casts in ambiguous situations',
     )
     default: bool | int | float | str | None = pydantic.Field(
         default=None,

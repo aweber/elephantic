@@ -111,6 +111,7 @@ class Trigger(pydantic.BaseModel):
                 [
                     self.name is not None,
                     self.when is not None,
+                    self.events is not None,
                     self.for_each is not None,
                     self.condition is not None,
                     self.function is not None,

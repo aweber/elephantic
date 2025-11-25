@@ -1,4 +1,4 @@
-"""Pydantic models for PydanSQL."""
+"""Pydantic models for elephantic."""
 
 from .acls import (
     ACLs,
