@@ -2,7 +2,11 @@
 
 from __future__ import annotations
 
+import re
+
 import pydantic
+
+_OPTION_NAME_PATTERN = re.compile(r'^[A-Za-z0-9_]*$')
 
 
 class Configuration(pydantic.BaseModel):
@@ -82,13 +86,10 @@ class Dictionary(pydantic.BaseModel):
         cls, v: dict[str, str | int | float | bool] | None
     ) -> dict[str, str | int | float | bool] | None:
         """Validate that option names match the required pattern."""
-        import re
-
         if v is None:
             return v
-        pattern = re.compile(r'^[A-Za-z0-9_]*$')
         for key in v.keys():
-            if not pattern.match(key):
+            if not _OPTION_NAME_PATTERN.match(key):
                 raise ValueError(
                     f'Option name "{key}" does not match required pattern: ^[A-Za-z0-9_]*$'
                 )
@@ -264,7 +265,7 @@ class TextSearch(pydantic.BaseModel):
     }
 
     @pydantic.model_serializer(mode='wrap')
-    def _serialize_model(self, serializer, info):
+    def _serialize_model(self, serializer, _info):
         """Serialize model using aliases by default."""
         data = serializer(self)
         # Use aliases for all serialization
