@@ -30,7 +30,6 @@ jobs:
 
       - name: Build and check package
         run: |
-          ./ci/calculate-version
           python -m build
           twine check dist/*
 
